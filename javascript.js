@@ -1,12 +1,7 @@
-let map, infoWindow;
-
-
-
-
-
-
-
-
+let map;
+let infoWindow;
+let icon;
+let marker;
 
     function initMap() {
 
@@ -28,14 +23,14 @@ let map, infoWindow;
       
        
         //add icon 
-        let icon = {
+         icon = {
         url: "5.png", 
         scaledSize: new google.maps.Size(50, 50), 
  
         };
 
         // Add marker
-        let marker = new google.maps.Marker({
+         marker = new google.maps.Marker({
             position:{lat: 50.049683, lng: 19.944544},
             map:map,
             icon: icon,
@@ -62,7 +57,7 @@ let map, infoWindow;
         // showing the user's location accurately
             marker.setPosition(pos);
             
-            marker.open(map);
+           
             map.setCenter(pos);
           }, function() {
             handleLocationError(true, infoWindow, map.getCenter());
@@ -71,8 +66,59 @@ let map, infoWindow;
           // Browser doesn't support Geolocation
           handleLocationError(false, infowindow, map.getCenter());
         }
-      }
 
+      
+
+     
+       
+
+    }
+
+
+    // move marker using keyboard arrows
+    window.addEventListener("keydown", function (e) {
+
+      let cordLat = marker.position.lat()
+      let cordLng = marker.position.lng()
+      let newPos;
+     
+      switch (e.keyCode) {
+        // left arrow
+        case 37:
+        newPos = new google.maps.LatLng(cordLat , cordLng - 0.01)
+        // set position and center map on marker 
+      marker.setPosition(newPos)
+       map.setCenter(newPos)
+          break;
+          // up arrow
+        case 38:
+        newPos = new google.maps.LatLng(cordLat+ 0.01 , cordLng )
+        marker.setPosition(newPos)
+         map.setCenter(newPos)
+        // down arrow
+          break;
+        case 40:
+        newPos = new google.maps.LatLng(cordLat- 0.01, cordLng )
+        marker.setPosition(newPos)
+         map.setCenter(newPos)
+          
+          break;
+          // right arrow
+        case 39:
+        newPos = new google.maps.LatLng(cordLat, cordLng + 0.01)
+        
+        marker.setPosition(newPos)
+         map.setCenter(newPos)
+          
+          break;
+}
+})
+
+
+   
+
+
+    
 
      
 
